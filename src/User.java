@@ -4,10 +4,10 @@ public class User {
     private int panicLevel;
     private String name;
 
-    public User(String name) {
+    public User() {
         stamina = 10;
         panicLevel = 10;
-        this.name = name;
+        name = "";
     }
 
     public int getStamina() {
@@ -28,6 +28,14 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void printName(){
+        System.out.println(this.name);
     }
 
     public void staminaUp(){
