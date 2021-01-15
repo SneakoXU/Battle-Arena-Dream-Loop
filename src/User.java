@@ -14,17 +14,17 @@ public class User {
         return stamina;
     }
 
-//    public void setStamina(int stamina) {
-//        this.stamina = stamina;
-//    }
+    public void setStamina(int stamina) {
+        this.stamina = stamina;
+    }
 
     public int getPanicLevel() {
         return panicLevel;
     }
 
-//    public void setPanicLevel(int panicLevel) {
-//        this.panicLevel = panicLevel;
-//    }
+    public void setPanicLevel(int panicLevel) {
+        this.panicLevel = panicLevel;
+    }
 
     public String getName() {
         return name;
