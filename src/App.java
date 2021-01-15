@@ -12,8 +12,10 @@ public class App {
         greeting();
         String inputName = userInput.nextLine();
 
+
         User player1 = new User();
         Enemy battleEnemy = new Enemy();
+        Dice gameDice = new Dice();
         int enemyHitPoints = battleEnemy.getHitPoints();
 
         player1.setName(inputName);
@@ -55,17 +57,43 @@ public class App {
             System.out.println("--------------------------\n\n");
             System.out.println("(R)oll the dice to begin the battle, " + player1.getName() + ".");
         }
-        while(run){
-            if(userInput.nextLine().equalsIgnoreCase("r")){
 
-                Dice gameDice = new Dice();
-                System.out.println(gameDice.getDiceRoll());
-                diceEffect(gameDice, player1, battleEnemy);
-                System.out.println("Press (R) to roll again...");
+        while(run){
+            String scriptInput = userInput.nextLine();
+            if(scriptInput.equalsIgnoreCase("r")) {
+                int diceResult = gameDice.getDiceRoll();
+                System.out.println(diceResult);
+                diceEffect(diceResult, player1, battleEnemy);
+                System.out.println("Press (R) to roll again or (S) to view your stats, (E) for the enemy's stats...");
+                        //scriptInput = userInput.nextLine();
             }
+            if(scriptInput.equalsIgnoreCase("s")) {
+                displayStats(player1);
+                System.out.println("Press (R) to roll again or (S) to view your stats, (E) for the enemy's stats...");
+            }
+            if(scriptInput.equalsIgnoreCase("e")){
+                displayEnemyStats(battleEnemy);
+                System.out.println("Press (R) to roll again or (S) to view your stats, (E) for the enemy's stats...");
+                        //scriptInput = userInput.nextLine();
+            }if(battleEnemy.getHitPoints() <= 0){
+                System.out.println("YOU DEFEATED THE DEMOGORGON!");
+                System.exit(0);
+            }if(player1.getPanicLevel() >= 20){
+                System.out.println("You are panicking too much and have submitted to the Demogorgon. You are now a prisoner of the Dream Loop Battle Arena forever.");
+                System.exit(0);
+            }if(player1.getStamina() <= 0){
+                System.out.println("The Demogorgon has won.");
+                System.exit(0);
+            }
+
+
+            }
+
+
+
         }
 
-    }
+
 
 
     public static void greeting(){
@@ -94,19 +122,19 @@ public class App {
 
     }
 
-    public static void diceEffect(Dice dice, User user, Enemy enemy){
-        if(dice.getDiceRoll() == 1){
+    public static void diceEffect(int diceNum, User user, Enemy enemy){
+        if(diceNum == 1){
             user.setPanicLevel(user.getPanicLevel() + 2);
-        }if(dice.getDiceRoll() == 2){
+        }else if(diceNum == 2){
             user.setStamina(user.getStamina() -1);
-        }if(dice.getDiceRoll() == 3){
+        }else if(diceNum == 3){
             System.out.println("You deflect their attack! No stat change!");
-        }if(dice.getDiceRoll() == 4){
+        }else if(diceNum == 4){
             user.setStamina(user.getStamina() + 1);
-        }if(dice.getDiceRoll() == 5){
+        }else if(diceNum == 5){
             user.setPanicLevel(user.getPanicLevel() -1);
             enemy.setHitPoints(enemy.getHitPoints() -3);
-        }if(dice.getDiceRoll() == 6){
+        }else if(diceNum == 6){
             user.setPanicLevel(user.getPanicLevel() -3);
             user.setStamina(user.getStamina() + 2);
             enemy.setHitPoints(enemy.getHitPoints() -5);
