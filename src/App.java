@@ -68,6 +68,10 @@ public class App {
                 int diceResult = gameDice.getDiceRoll();
                 System.out.println(diceResult);
                 diceEffect(diceResult, player1, battleEnemy);
+                if(battleEnemy.getHitPoints()>0){
+                    player1.setStamina(player1.getStamina() -1);
+                    player1.setPanicLevel(player1.getPanicLevel() + 1);
+                }
                 System.out.println(">>> Enter (R) to roll again or (S) to view your stats, (E) for the enemy's stats...");
                         //scriptInput = userInput.nextLine();
             }
@@ -82,9 +86,6 @@ public class App {
             }if(battleEnemy.getHitPoints() <= 0){
                 System.out.println("YOU DEFEATED THE DEMOGORGON!");
                 System.exit(0);
-            }if(battleEnemy.getHitPoints()>0){
-                player1.setStamina(player1.getStamina() -1);
-                player1.setPanicLevel(player1.getPanicLevel() + 1);
             }
             if(player1.getPanicLevel() >= 20){
                 System.out.println("You are panicking too much and have submitted to the Demogorgon. You are now a prisoner of the Dream Loop Battle Arena forever.");
