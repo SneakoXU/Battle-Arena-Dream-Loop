@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
+    
 
     public static void main(String[] args) {
         run();
@@ -14,9 +17,9 @@ public class App {
 
 
         User player1 = new User();
-        Enemy battleEnemy = new Enemy();
+        Enemy battleEnemy = new Enemy("The Demogorgon", "Demon");
         Dice gameDice = new Dice();
-        int enemyHitPoints = battleEnemy.getHitPoints();
+        //int enemyHitPoints = battleEnemy.getHitPoints();
 
         player1.setName(inputName);
         System.out.println("Welcome to the Battle Arena Dream Loop, " + inputName + ". " + "Hope you are ready to fight for your survival.");
@@ -84,14 +87,14 @@ public class App {
                 System.out.println(">>> Enter (R) to roll again or (S) to view your stats, (E) for the enemy's stats...");
                         //scriptInput = userInput.nextLine();
             }if(battleEnemy.getHitPoints() <= 0){
-                System.out.println("YOU DEFEATED THE DEMOGORGON!");
+                System.out.println("YOU DEFEATED " + battleEnemy.getName().toUpperCase() + "!");
                 System.exit(0);
             }
             if(player1.getPanicLevel() >= 20){
-                System.out.println("You are panicking too much and have submitted to the Demogorgon. You are now a prisoner of the Dream Loop Battle Arena forever.");
+                System.out.println("You are panicking too much and have submitted to the enemy. You are now a prisoner of the Dream Loop Battle Arena forever.");
                 System.exit(0);
             }if(player1.getStamina() <= 0){
-                System.out.println("The Demogorgon has won.");
+                System.out.println(battleEnemy.getName() + " has won.");
                 System.exit(0);
             }
 
@@ -116,6 +119,10 @@ public class App {
         System.out.println("Please enter your name: ");
     }
 
+    public static void createEnemies(){
+
+    }
+
     public static void displayStats(User player){
 //        int playerStamina = player.getStamina();
 //        int playerPanic = player.getPanicLevel();
@@ -125,8 +132,8 @@ public class App {
 
     public static void displayEnemyStats(Enemy enemy){
         int hitPoints = enemy.getHitPoints();
-        System.out.println("Name: The Demogorgon");
-        System.out.println("Type: Demon");
+        System.out.println("Name: " + enemy.getName());
+        System.out.println("Type: " + enemy.getType());
         System.out.println("Hit Points: " + hitPoints);
 
     }
