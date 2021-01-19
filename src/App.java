@@ -10,7 +10,8 @@ public class App {
     }
 
     public static void run() {
-        boolean run = true;
+        int rolls = 1;
+        boolean run = false;
         Scanner userInput = new Scanner(System.in);
         greeting();
         String inputName = userInput.nextLine();
@@ -23,9 +24,10 @@ public class App {
 
         player1.setName(inputName);
         System.out.println("Welcome to the Battle Arena Dream Loop, " + inputName + ". " + "Hope you are ready to fight for your survival.");
-        System.out.println(">>> Enter 1 to continue and view your survival stats...");
+        System.out.println(">>> Press enter to continue and view your survival stats...");
 
-        if(userInput.nextLine().equals("1")) {
+        //if(userInput.nextLine()) {
+        userInput.nextLine();
             System.out.println("--------------------------");
             System.out.println("--------------------------");
             System.out.println("\n" +
@@ -37,12 +39,13 @@ public class App {
                     "  \\_/\\___/ \\__,_|_|    \\____/ \\__,_|_|    \\_/ |_| \\_/ \\__,_|_| \\____/ \\__\\__,_|\\__|___/\n" +
                     "                                                                                       \n" +
                     "                                                                                       \n");
-            displayStats(player1);
+            displayStats(player1, rolls);
             System.out.println("--------------------------");
             System.out.println("--------------------------\n\n");
-            System.out.println(">>> Enter (E) to view your enemy...");
-        }
-        if(userInput.nextLine().equalsIgnoreCase("e")){
+            System.out.println(">>> Press enter to view your enemy...");
+       // }
+        userInput.nextLine();
+        //if(userInput.nextLine().equalsIgnoreCase("e")){
             System.out.println("--------------------------");
             System.out.println("--------------------------");
             System.out.println("\n" +
@@ -58,44 +61,53 @@ public class App {
             displayEnemyStats(battleEnemy);
             System.out.println("--------------------------");
             System.out.println("--------------------------\n\n");
-            System.out.println(">>> Enter (D) to view the dice roll effects/details...");
-        }
-        if(userInput.nextLine().equalsIgnoreCase("d")){
+            System.out.println(">>> Press enter to view the dice roll effects/details...");
+       // }
+
+        userInput.nextLine();
+       // if(userInput.nextLine().equalsIgnoreCase("d")){
             diceDetails();
-            System.out.println(">>> (R)oll the dice to begin the battle, " + player1.getName() + ".");
-        }
+            System.out.println(">>> Enter (R) to roll the dice and begin the battle, " + player1.getName() + ".");
+            run = true;
+      //  }
 
         while(run){
             String scriptInput = userInput.nextLine();
-            if(scriptInput.equalsIgnoreCase("r")) {
+            if(scriptInput.equalsIgnoreCase("r") && rolls <= 10) {
                 int diceResult = gameDice.getDiceRoll();
+                rolls++;
                 System.out.println(diceResult);
                 diceEffect(diceResult, player1, battleEnemy);
                 if(battleEnemy.getHitPoints()>0){
                     player1.setStamina(player1.getStamina() -1);
                     player1.setPanicLevel(player1.getPanicLevel() + 1);
                 }
-                System.out.println(">>> Enter (R) to roll again or (S) to view your stats, (E) for the enemy's stats...");
+                System.out.println(">>> Enter (R) to roll again - (S) to view your stats - (E) for the enemy's stats...");
                         //scriptInput = userInput.nextLine();
             }
-            if(scriptInput.equalsIgnoreCase("s")) {
-                displayStats(player1);
-                System.out.println(">>> Enter (R) to roll again or (S) to view your stats, (E) for the enemy's stats...");
+            else if(rolls > 10){
+                System.out.println("You have taken too long to defeat the enemy. You are now a prisoner of the Dream Loop Battle Arena forever.");
+                System.exit(0);
             }
-            if(scriptInput.equalsIgnoreCase("e")){
+            else if(scriptInput.equalsIgnoreCase("s")) {
+                displayStats(player1, rolls);
+                System.out.println(">>> Enter (R) to roll again - (S) to view your stats - (E) for the enemy's stats...");
+            }
+            else if(scriptInput.equalsIgnoreCase("e")){
                 displayEnemyStats(battleEnemy);
-                System.out.println(">>> Enter (R) to roll again or (S) to view your stats, (E) for the enemy's stats...");
-                        //scriptInput = userInput.nextLine();
-            }if(battleEnemy.getHitPoints() <= 0){
+                System.out.println(">>> Enter (R) to roll again - (S) to view your stats - (E) for the enemy's stats...");
+            }else if(battleEnemy.getHitPoints() <= 0){
                 System.out.println("YOU DEFEATED " + battleEnemy.getName().toUpperCase() + "!");
                 System.exit(0);
             }
-            if(player1.getPanicLevel() >= 20){
+            else if(player1.getPanicLevel() >= 20){
                 System.out.println("You are panicking too much and have submitted to the enemy. You are now a prisoner of the Dream Loop Battle Arena forever.");
                 System.exit(0);
-            }if(player1.getStamina() <= 0){
+            }else if(player1.getStamina() <= 0){
                 System.out.println(battleEnemy.getName() + " has won.");
                 System.exit(0);
+            }else{
+                System.out.println("Please enter a valid input.");
             }
 
 
@@ -119,15 +131,12 @@ public class App {
         System.out.println("Please enter your name: ");
     }
 
-    public static void createEnemies(){
-
-    }
-
-    public static void displayStats(User player){
+    public static void displayStats(User player, int rollsNum){
 //        int playerStamina = player.getStamina();
 //        int playerPanic = player.getPanicLevel();
         System.out.println("Stamina: " + player.getStamina());
         System.out.println("Panic Level: " + player.getPanicLevel());
+        System.out.println("Turn: " + rollsNum + "/10");
     }
 
     public static void displayEnemyStats(Enemy enemy){
